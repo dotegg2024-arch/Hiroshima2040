@@ -391,14 +391,39 @@ class HiroshimaMap {
     }
   }
 
-  filterMarkers(level) {
+  filterMarkers(criteria) {
+    let visibleCount = 0;
+
     this.markers.forEach(({ marker, hospital }) => {
-      const isMatch = (level === 'all') || (hospital.emergencyLevel === Number(level));
+      // 1. Emergency Level
+      const matchEmergency = (criteria.emergency === 'all') || (hospital.emergencyLevel === Number(criteria.emergency));
+
+      // 2. Beds
+      const matchBeds = hospital.beds >= criteria.minBeds;
+
+      // 3. Department
+      // Data format check: hospital.departments is array of strings
+      let matchDept = true;
+      if (criteria.department) {
+        // 部分一致検索 (e.g. "外科" matches "脳神経外科", "整形外科" etc? No, user usually wants specific or exact category)
+        // For now, let's use string inclusion: does any dept include the search term?
+        // Or strict inclusion if data is clean.
+        // Let's use flexible check: if hospital has a dept that *includes* the search string.
+        if (hospital.departments && Array.isArray(hospital.departments)) {
+          matchDept = hospital.departments.some(d => d.includes(criteria.department));
+        } else {
+          matchDept = false;
+        }
+      }
+
+      const isMatch = matchEmergency && matchBeds && matchDept;
 
       if (isMatch) {
+        visibleCount++;
         if (!this.map.hasLayer(marker)) {
           marker.addTo(this.map);
         }
+        // ハイライト状態の復元
         if (this.currentRegion) {
           const markerObj = this.markers.find(m => m.marker === marker);
           if (markerObj && markerObj.regionKey === this.currentRegion) {
@@ -415,6 +440,8 @@ class HiroshimaMap {
         }
       }
     });
+
+    return visibleCount;
   }
 
   updateSidePanel(regionId) {

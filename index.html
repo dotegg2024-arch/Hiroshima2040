@@ -74,15 +74,49 @@
                 <button class="btn active" id="btn-map-leaflet" onclick="switchMapView('leaflet')">🗺️ 詳細地図</button>
                 <button class="btn" id="btn-map-simple" onclick="switchMapView('simple')">📍 シンプル</button>
               </div>
+
               <div class="map-view-toggle" id="filter-controls">
-                <button class="btn active" id="btn-filter-all" onclick="filterMap('all')">全表示</button>
-                <button class="btn" id="btn-filter-3" onclick="filterMap(3)">3次救急</button>
-                <button class="btn" id="btn-filter-2" onclick="filterMap(2)">2次救急</button>
-                <button class="btn" id="btn-filter-1" onclick="filterMap(1)">1次救急</button>
+                <button class="btn active" id="btn-filter-all" onclick="setEmergencyFilter('all')">全表示</button>
+                <button class="btn" id="btn-filter-3" onclick="setEmergencyFilter(3)">3次救急</button>
+                <button class="btn" id="btn-filter-2" onclick="setEmergencyFilter(2)">2次救急</button>
+                <button class="btn" id="btn-filter-1" onclick="setEmergencyFilter(1)">1次救急</button>
               </div>
-              <button class="btn btn-secondary" onclick="resetMapView()">🔄 リセット</button>
-              <button class="btn btn-accent" id="btn-pop-anim" onclick="toggleHumanAnimation()"
-                style="margin-left:8px;">👥 人口アニメーション</button>
+
+              <!-- 詳細フィルタ（新規追加） -->
+              <div id="advanced-filters"
+                style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border-color); display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <select id="filter-dept" class="form-select" onchange="updateFilters()"
+                  style="padding:4px 8px; font-size:0.85rem; width:auto; min-width:120px;">
+                  <option value="">全ての診療科</option>
+                  <option value="内科">内科</option>
+                  <option value="外科">外科</option>
+                  <option value="救急">救急科</option>
+                  <option value="小児">小児科</option>
+                  <option value="産婦人科">産婦人科</option>
+                  <option value="精神科">精神科</option>
+                  <option value="脳神経外科">脳神経外科</option>
+                  <option value="循環器">循環器内科</option>
+                  <option value="整形外科">整形外科</option>
+                </select>
+
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <label for="filter-beds" style="font-size:0.8rem; white-space:nowrap;">病床数:</label>
+                  <input type="range" id="filter-beds" min="0" max="600" step="20" value="0"
+                    oninput="document.getElementById('beds-val').innerText = this.value + '+'"
+                    onchange="updateFilters()" style="width:100px;">
+                  <span id="beds-val" style="font-size:0.8rem; font-weight:bold; min-width:30px;">0+</span>
+                </div>
+
+                <div style="flex-grow:1; text-align:right;">
+                  <span id="filter-count" style="font-size:0.8rem; color:var(--text-muted);"></span>
+                </div>
+              </div>
+
+              <div style="margin-top:8px; display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="resetMapView()">🔄 リセット</button>
+                <button class="btn btn-accent btn-sm" id="btn-pop-anim" onclick="toggleHumanAnimation()">👥
+                  人口アニメーション</button>
+              </div>
             </div>
 
             <!-- Leaflet マップ -->
@@ -293,15 +327,32 @@
       }
     }
 
-    // マップフィルター
-    function filterMap(level) {
+    // フィルタ状態管理
+    let currentEmergencyFilter = 'all';
+
+    function setEmergencyFilter(level) {
+      currentEmergencyFilter = level;
+
       // ボタンのアクティブ状態更新
       document.querySelectorAll('[id^="btn-filter-"]').forEach(btn => btn.classList.remove('active'));
       const activeBtnId = level === 'all' ? 'btn-filter-all' : `btn-filter-${level}`;
       document.getElementById(activeBtnId).classList.add('active');
 
+      updateFilters();
+    }
+
+    // 統合フィルタ関数
+    function updateFilters() {
+      const dept = document.getElementById('filter-dept').value;
+      const minBeds = parseInt(document.getElementById('filter-beds').value, 10);
+
       if (window.hiroshimaMap) {
-        window.hiroshimaMap.filterMarkers(level);
+        const count = window.hiroshimaMap.filterMarkers({
+          emergency: currentEmergencyFilter,
+          department: dept,
+          minBeds: minBeds
+        });
+        document.getElementById('filter-count').innerText = `表示: ${count} 件`;
       }
     }
 
