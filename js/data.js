@@ -40,7 +40,7 @@ const MEDICAL_DATA = {
         "2040": 1120000
       },
       "beds": {
-        "total": 12762,
+        "total": 18699,
         "highAcute": 2100,
         "acute": 5200,
         "recovery": 2800,
@@ -112,7 +112,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　三和会　おおうち病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -153,7 +153,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "松田病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -164,7 +164,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "真田病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -175,7 +175,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　土本病院",
-          "beds": 0,
+          "beds": 70,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -186,7 +186,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "塩田病院",
-          "beds": 0,
+          "beds": 24,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -197,7 +197,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団生和会　たかの橋中央病院",
-          "beds": 0,
+          "beds": 104,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -208,7 +208,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人三渓会　川堀病院",
-          "beds": 0,
+          "beds": 39,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -219,7 +219,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島第一病院",
-          "beds": 0,
+          "beds": 200,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -230,7 +230,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "槙坪病院",
-          "beds": 0,
+          "beds": 95,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -241,7 +241,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "山本整形外科病院",
-          "beds": 0,
+          "beds": 52,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -252,7 +252,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　せのがわ　瀬野川病院",
-          "beds": 0,
+          "beds": 312,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -263,7 +263,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人ワカサ会　ワカサ・リハビリ病院",
-          "beds": 0,
+          "beds": 155,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -274,7 +274,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "山﨑病院",
-          "beds": 0,
+          "beds": 148,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -285,7 +285,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "太田川病院",
-          "beds": 0,
+          "beds": 214,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -296,7 +296,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人恒和会　松石病院",
-          "beds": 0,
+          "beds": 58,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -307,7 +307,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島シーサイド病院",
-          "beds": 0,
+          "beds": 183,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -318,7 +318,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島厚生病院",
-          "beds": 0,
+          "beds": 150,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -344,7 +344,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "比治山病院",
-          "beds": 0,
+          "beds": 162,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -355,7 +355,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団まりも会　ヒロシマ平松病院",
-          "beds": 0,
+          "beds": 161,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -366,7 +366,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団おると会　浜脇整形外科病院",
-          "beds": 0,
+          "beds": 160,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -377,7 +377,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "一ノ瀬病院",
-          "beds": 0,
+          "beds": 95,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -388,7 +388,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "林病院",
-          "beds": 0,
+          "beds": 51,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -399,7 +399,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　新でしお病院",
-          "beds": 0,
+          "beds": 35,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -425,7 +425,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "翠清会梶川病院",
-          "beds": 0,
+          "beds": 143,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -436,7 +436,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島中央リハビリテーション病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -447,7 +447,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団生和会　広島はくしま病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -458,7 +458,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "瀬野記念病院",
-          "beds": 0,
+          "beds": 99,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -515,7 +515,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団玉章会　力田病院",
-          "beds": 0,
+          "beds": 86,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -526,7 +526,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　光仁会　梶川病院",
-          "beds": 0,
+          "beds": 88,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -537,7 +537,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　正岡産婦人科病院",
-          "beds": 0,
+          "beds": 34,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -562,7 +562,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団曙会　シムラ病院",
-          "beds": 0,
+          "beds": 117,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -587,7 +587,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "頼島産婦人科病院",
-          "beds": 0,
+          "beds": 35,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -598,7 +598,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "高陽中央病院",
-          "beds": 0,
+          "beds": 55,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -622,7 +622,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　加川整形外科病院",
-          "beds": 0,
+          "beds": 30,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -633,7 +633,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　慈恵会　いまだ病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -644,7 +644,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "長久堂野村病院",
-          "beds": 0,
+          "beds": 79,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -655,7 +655,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団共愛会　己斐ケ丘病院",
-          "beds": 0,
+          "beds": 221,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -666,7 +666,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "日比野病院",
-          "beds": 0,
+          "beds": 146,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -677,7 +677,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "野村病院",
-          "beds": 0,
+          "beds": 106,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -688,7 +688,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団うすい会　高陽ニュータウン病院",
-          "beds": 0,
+          "beds": 140,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -699,7 +699,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "養神館病院",
-          "beds": 0,
+          "beds": 218,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -710,7 +710,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　一陽会　原田病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -721,7 +721,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "ナカムラ病院",
-          "beds": 0,
+          "beds": 260,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -732,7 +732,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団初仁会　桧田病院",
-          "beds": 0,
+          "beds": 114,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -743,7 +743,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "荒木脳神経外科病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -754,7 +754,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団朋和会　西広島リハビリテーション病院",
-          "beds": 0,
+          "beds": 139,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -779,7 +779,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島グリーンヒル病院",
-          "beds": 0,
+          "beds": 150,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -790,7 +790,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人和同会　広島パークヒル病院",
-          "beds": 0,
+          "beds": 114,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -801,7 +801,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "妹尾病院",
-          "beds": 0,
+          "beds": 48,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -812,7 +812,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "重症児・者福祉医療施設　鈴が峰",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -823,7 +823,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団公仁会　槇殿順記念病院",
-          "beds": 0,
+          "beds": 28,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -834,7 +834,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "生協さえき病院",
-          "beds": 0,
+          "beds": 114,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -845,7 +845,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "さんよう水野病院",
-          "beds": 0,
+          "beds": 100,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -856,7 +856,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "サカ緑井病院",
-          "beds": 0,
+          "beds": 51,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -867,7 +867,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　聖愛会　ぎおん牛田病院",
-          "beds": 0,
+          "beds": 90,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -878,7 +878,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "原田整形外科病院",
-          "beds": 0,
+          "beds": 51,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -889,7 +889,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "長崎病院",
-          "beds": 0,
+          "beds": 130,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -900,7 +900,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "地方独立行政法人広島市立病院機構　広島市立リハビリテーション病院",
-          "beds": 0,
+          "beds": 100,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -941,7 +941,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "福島生協病院",
-          "beds": 0,
+          "beds": 165,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -966,7 +966,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "コムラ病院",
-          "beds": 0,
+          "beds": 20,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -977,7 +977,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　広和会　福馬病院",
-          "beds": 0,
+          "beds": 44,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1003,7 +1003,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "安佐医師会病院",
-          "beds": 0,
+          "beds": 102,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1028,7 +1028,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "神原病院",
-          "beds": 0,
+          "beds": 115,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1039,7 +1039,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団葵会　本永病院",
-          "beds": 0,
+          "beds": 182,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1050,7 +1050,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "木阪病院",
-          "beds": 0,
+          "beds": 80,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1061,7 +1061,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　二山会　宗近病院",
-          "beds": 0,
+          "beds": 216,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1085,7 +1085,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "土肥整形外科病院",
-          "beds": 0,
+          "beds": 80,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1096,7 +1096,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団葵会八本松病院",
-          "beds": 0,
+          "beds": 235,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1107,7 +1107,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "井野口病院",
-          "beds": 0,
+          "beds": 188,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1147,7 +1147,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "ＡＯＩ広島病院",
-          "beds": 0,
+          "beds": 200,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1203,7 +1203,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "府中みくまり病院",
-          "beds": 0,
+          "beds": 317,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1214,7 +1214,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "山本整形外科病院",
-          "beds": 0,
+          "beds": 52,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1225,7 +1225,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "南海田病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1250,7 +1250,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "北広島病院",
-          "beds": 0,
+          "beds": 55,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1276,7 +1276,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団慶寿会　千代田中央病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1287,7 +1287,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "大朝ふるさと病院",
-          "beds": 0,
+          "beds": 36,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1313,7 +1313,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "康成病院",
-          "beds": 0,
+          "beds": 74,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1324,7 +1324,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　真慈会　真愛病院",
-          "beds": 0,
+          "beds": 55,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1399,7 +1399,7 @@ const MEDICAL_DATA = {
         "2040": 110000
       },
       "beds": {
-        "total": 1850,
+        "total": 2366,
         "highAcute": 150,
         "acute": 680,
         "recovery": 520,
@@ -1423,7 +1423,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団親和会　やまと病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1463,7 +1463,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "廿日市野村病院",
-          "beds": 0,
+          "beds": 102,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1489,7 +1489,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "社会福祉法人　三篠会　重症児・者福祉医療施設　原",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1500,7 +1500,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "アマノ病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1511,7 +1511,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　友和会　友和病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1522,7 +1522,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "佐伯中央病院",
-          "beds": 0,
+          "beds": 38,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1533,7 +1533,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "大野浦病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1579,7 +1579,7 @@ const MEDICAL_DATA = {
         "2040": 165000
       },
       "beds": {
-        "total": 3580,
+        "total": 4544,
         "highAcute": 380,
         "acute": 1200,
         "recovery": 1100,
@@ -1619,7 +1619,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "木村胃腸科病院",
-          "beds": 0,
+          "beds": 44,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1630,7 +1630,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "呉芸南病院",
-          "beds": 0,
+          "beds": 119,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1641,7 +1641,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団中川会　呉中通病院",
-          "beds": 0,
+          "beds": 123,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1652,7 +1652,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "大矢整形外科病院",
-          "beds": 0,
+          "beds": 33,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1663,7 +1663,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団有信会　呉記念病院",
-          "beds": 0,
+          "beds": 93,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1674,7 +1674,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　永楽会　前田病院",
-          "beds": 0,
+          "beds": 76,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1685,7 +1685,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "佐藤病院",
-          "beds": 0,
+          "beds": 42,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1696,7 +1696,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "青山病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1736,7 +1736,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "マッターホルンリハビリテーション病院",
-          "beds": 0,
+          "beds": 64,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1747,7 +1747,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "ふたば病院",
-          "beds": 0,
+          "beds": 186,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1758,7 +1758,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　薫風会　横山病院",
-          "beds": 0,
+          "beds": 40,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1784,7 +1784,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "公立下蒲刈病院",
-          "beds": 0,
+          "beds": 49,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1795,7 +1795,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団生和会　呉やけやま病院",
-          "beds": 0,
+          "beds": 184,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1806,7 +1806,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　悠仁会　後藤病院",
-          "beds": 0,
+          "beds": 84,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1817,7 +1817,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "重症心身障害児施設　ときわ呉",
-          "beds": 0,
+          "beds": 70,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1828,7 +1828,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団ひかり会　木村眼科内科病院",
-          "beds": 0,
+          "beds": 40,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1839,7 +1839,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "呉みどりヶ丘病院",
-          "beds": 0,
+          "beds": 275,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1865,7 +1865,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "島の病院おおたに",
-          "beds": 0,
+          "beds": 96,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1876,7 +1876,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　仁風会　青木病院",
-          "beds": 0,
+          "beds": 78,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1887,7 +1887,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "一般財団法人　広島結核予防協会　住吉浜病院",
-          "beds": 0,
+          "beds": 35,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1898,7 +1898,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　吉田会　吉田病院",
-          "beds": 0,
+          "beds": 105,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1909,7 +1909,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団はまい会　大君浜井病院",
-          "beds": 0,
+          "beds": 35,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1968,7 +1968,7 @@ const MEDICAL_DATA = {
       "hospitals": [
         {
           "name": "医療法人楽生会　馬場病院",
-          "beds": 0,
+          "beds": 80,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1979,7 +1979,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団恵宣会　竹原病院",
-          "beds": 0,
+          "beds": 192,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -1990,7 +1990,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団仁慈会　安田病院",
-          "beds": 0,
+          "beds": 153,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2023,7 +2023,7 @@ const MEDICAL_DATA = {
         "2040": 150000
       },
       "beds": {
-        "total": 3200,
+        "total": 4036,
         "highAcute": 320,
         "acute": 1100,
         "recovery": 980,
@@ -2062,7 +2062,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人清幸会　三原城町病院",
-          "beds": 0,
+          "beds": 188,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2086,7 +2086,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人杏仁会　松尾内科病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2112,7 +2112,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人宗斉会　須波宗斉会病院",
-          "beds": 0,
+          "beds": 70,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2138,7 +2138,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "青山病院",
-          "beds": 0,
+          "beds": 120,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2164,7 +2164,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　杏佑会　笠井病院",
-          "beds": 0,
+          "beds": 30,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2175,7 +2175,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　神田会　木曽病院",
-          "beds": 0,
+          "beds": 133,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2186,7 +2186,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　啓卯会　村上記念病院",
-          "beds": 0,
+          "beds": 52,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2197,7 +2197,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　重松会　松本病院",
-          "beds": 0,
+          "beds": 182,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2238,7 +2238,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "山本病院",
-          "beds": 0,
+          "beds": 39,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2249,7 +2249,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "カナデビア健康保険組合　因島総合病院",
-          "beds": 0,
+          "beds": 83,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2274,7 +2274,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　仁康会　本郷中央病院",
-          "beds": 0,
+          "beds": 81,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2322,7 +2322,7 @@ const MEDICAL_DATA = {
         "2040": 408000
       },
       "beds": {
-        "total": 5083,
+        "total": 6270,
         "highAcute": 650,
         "acute": 1850,
         "recovery": 1380,
@@ -2333,7 +2333,7 @@ const MEDICAL_DATA = {
       "hospitals": [
         {
           "name": "医療法人村上会　福山回生病院",
-          "beds": 0,
+          "beds": 40,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2344,7 +2344,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　賢仁会　松岡病院",
-          "beds": 0,
+          "beds": 41,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2355,7 +2355,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　大林会　福山こころの病院",
-          "beds": 0,
+          "beds": 254,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2366,7 +2366,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　健生会　いそだ病院",
-          "beds": 0,
+          "beds": 41,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2423,7 +2423,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　若葉会　蔵王病院",
-          "beds": 0,
+          "beds": 241,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2434,7 +2434,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人慈生会　前原病院",
-          "beds": 0,
+          "beds": 59,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2460,7 +2460,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　信英会　島谷病院",
-          "beds": 0,
+          "beds": 53,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2471,7 +2471,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "大石病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2482,7 +2482,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団緑誠会　光の丘病院",
-          "beds": 0,
+          "beds": 175,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2493,7 +2493,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団玄同会　小畠病院",
-          "beds": 0,
+          "beds": 111,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2504,7 +2504,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　徹慈会　堀病院",
-          "beds": 0,
+          "beds": 35,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2543,7 +2543,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　永光会　水永リハビリテーション病院",
-          "beds": 0,
+          "beds": 73,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2554,7 +2554,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　辰川会　山陽病院",
-          "beds": 0,
+          "beds": 82,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2565,7 +2565,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　叙叙会　福山第一病院",
-          "beds": 0,
+          "beds": 132,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2576,7 +2576,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "下永病院",
-          "beds": 0,
+          "beds": 159,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2587,7 +2587,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "西福山病院",
-          "beds": 0,
+          "beds": 122,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2598,7 +2598,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人東和会　小林病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2609,7 +2609,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人財団竹政会　福山循環器病院",
-          "beds": 0,
+          "beds": 80,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2620,7 +2620,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団健照会　住吉ふじい病院",
-          "beds": 0,
+          "beds": 81,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2644,7 +2644,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "楠本病院",
-          "beds": 0,
+          "beds": 97,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2655,7 +2655,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団　宏仁会　寺岡整形外科病院",
-          "beds": 0,
+          "beds": 122,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2666,7 +2666,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "井上病院",
-          "beds": 0,
+          "beds": 38,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2677,7 +2677,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人三宅会　三宅会グッドライフ病院",
-          "beds": 0,
+          "beds": 110,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2688,7 +2688,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "広島県立福山若草園",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2699,7 +2699,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団生和会　福山リハビリテーション病院",
-          "beds": 0,
+          "beds": 302,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2710,7 +2710,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人財団竹政会　セントラル病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2721,7 +2721,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　秀明会　小池病院",
-          "beds": 0,
+          "beds": 54,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2732,7 +2732,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "福山南病院",
-          "beds": 0,
+          "beds": 114,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2743,7 +2743,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人同仁会　府中中央内科病院",
-          "beds": 0,
+          "beds": 45,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2754,7 +2754,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "府中市立湯が丘病院",
-          "beds": 0,
+          "beds": 248,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2780,7 +2780,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "府中北市民病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2806,7 +2806,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人　慈彗会　亀川病院",
-          "beds": 0,
+          "beds": 74,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2832,7 +2832,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "神石高原町立病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2878,7 +2878,7 @@ const MEDICAL_DATA = {
         "2040": 56000
       },
       "beds": {
-        "total": 1420,
+        "total": 1571,
         "highAcute": 120,
         "acute": 480,
         "recovery": 450,
@@ -2889,7 +2889,7 @@ const MEDICAL_DATA = {
       "hospitals": [
         {
           "name": "医療法人新和会　三次病院",
-          "beds": 0,
+          "beds": 235,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2900,7 +2900,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "三次地区医療センター",
-          "beds": 0,
+          "beds": 150,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2911,7 +2911,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人微風会　ビハーラ花の里病院",
-          "beds": 0,
+          "beds": 290,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2937,7 +2937,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "子鹿医療療育センター",
-          "beds": 0,
+          "beds": 84,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2963,7 +2963,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "庄原同仁病院",
-          "beds": 0,
+          "beds": 60,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2974,7 +2974,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "備北ななつか病院",
-          "beds": 0,
+          "beds": 113,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
@@ -2999,7 +2999,7 @@ const MEDICAL_DATA = {
         },
         {
           "name": "医療法人社団増原会　東城病院",
-          "beds": 0,
+          "beds": 50,
           "type": "一般",
           "emergencyLevel": 1,
           "departments": [],
