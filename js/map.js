@@ -773,6 +773,52 @@ class HiroshimaMap {
 
 
 
+  highlightMunicipality(name) {
+    if (!name) {
+      this.resetView(); // Reset styles
+      return;
+    }
+
+    let found = false;
+    // Iterate all loaded municipality layers
+    this.municipalityLayers.forEach(({ layer, name: layerName, regionId }) => {
+      if (layerName === name) {
+        // Highlight Target: Yellow and Thick
+        layer.setStyle({
+          color: '#FACC15', // Yellow-400
+          weight: 4,
+          opacity: 1,
+          fillColor: '#FACC15',
+          fillOpacity: 0.5
+        });
+        layer.bringToFront();
+
+        // Zoom to it
+        if (layer.getBounds) {
+          this.map.fitBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 12, animate: true });
+        }
+        found = true;
+      } else {
+        // Dim others (Grayish) to emphasize selection
+        const region = MEDICAL_DATA.regions[regionId];
+        layer.setStyle({
+          color: region ? region.color : '#cbd5e1',
+          weight: 1,
+          opacity: 0.3,
+          fillOpacity: 0.1
+        });
+      }
+    });
+
+    if (found) {
+      console.log(`Highlighted municipality: ${name}`);
+    } else {
+      console.warn(`Municipality not found for highlighting: ${name}`);
+      // Fallback: If not found in geojson layers, maybe put a marker?
+      // But preventing error is good enough.
+    }
+  }
+
   resetView() {
     this.municipalityLayers.forEach(({ layer, regionId }) => {
       const region = MEDICAL_DATA.regions[regionId];

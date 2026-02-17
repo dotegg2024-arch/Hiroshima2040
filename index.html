@@ -41,6 +41,18 @@
           <button class="btn btn-secondary" onclick="window.print()">
             📄 印刷
           </button>
+          <div class="dropdown" style="display:inline-block; margin-left:8px;">
+            <button class="btn btn-primary" onclick="document.getElementById('export-menu').classList.toggle('show')">
+              💾 データ保存
+            </button>
+            <div id="export-menu" class="dropdown-content"
+              style="display:none; position:absolute; right:0; background:white; border:1px solid #ccc; padding:10px; z-index:1000; box-shadow:0 4px 6px rgba(0,0,0,0.1); border-radius:4px; min-width:180px;">
+              <button class="btn btn-sm" style="width:100%; text-align:left; margin-bottom:4px;"
+                onclick="window.app.exportData('municipalities')">📥 市区町村推計データ (CSV)</button>
+              <button class="btn btn-sm" style="width:100%; text-align:left;"
+                onclick="window.app.exportData('hospitals')">📥 医療機関データ (CSV)</button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -89,17 +101,62 @@
           </div>
         </div>
 
-        <!-- Population Chart -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">📈 人口推移予測（2020-2040年）</span>
+        <div class="analysis-controls" style="margin-bottom: 12px; display: flex; flex-direction:column; gap:8px;">
+          <div style="font-size:0.85rem; font-weight:700; color:var(--text-secondary); width:100%;">
+            📊 表示モード切替
           </div>
-          <div class="card-body">
-            <div class="chart-container">
-              <canvas id="population-chart"></canvas>
+          <div style="display:flex; justify-content: space-between; align-items: center; width:100%;">
+            <div class="unit-tabs segment-control" style="width: auto; min-width: 240px;">
+              <input type="radio" name="analysis-unit" id="unit-region" value="region" checked
+                onclick="window.app.switchAnalysisUnit('region')">
+              <label for="unit-region">医療圏</label>
+
+              <input type="radio" name="analysis-unit" id="unit-municipality" value="municipality"
+                onclick="window.app.switchAnalysisUnit('municipality')">
+              <label for="unit-municipality">市区町村</label>
+
+              <div class="segment-indicator"></div>
+            </div>
+
+            <!-- Municipality Selector (Visible only when municipality is selected) -->
+            <div id="municipality-selector-container" style="display: none;">
+              <select id="municipality-select" class="form-select" onchange="window.app.selectMunicipality(this.value)">
+                <option value="">市区町村を選択...</option>
+              </select>
             </div>
           </div>
-        </div>
+
+          <!-- Population Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📈 人口推移予測（2020-2040年）</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="population-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Age Composition Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📊 年代別人口構成</span>
+              <div class="age-year-tabs">
+                <button class="year-tab active" data-year="2020"
+                  onclick="window.app.switchAgeChartYear(2020)">2020</button>
+                <button class="year-tab" data-year="2025" onclick="window.app.switchAgeChartYear(2025)">2025</button>
+                <button class="year-tab" data-year="2030" onclick="window.app.switchAgeChartYear(2030)">2030</button>
+                <button class="year-tab" data-year="2035" onclick="window.app.switchAgeChartYear(2035)">2035</button>
+                <button class="year-tab" data-year="2040" onclick="window.app.switchAgeChartYear(2040)">2040</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="height: 350px;">
+                <canvas id="age-composition-chart"></canvas>
+              </div>
+            </div>
+          </div>
 
 
       </section>

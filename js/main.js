@@ -9,6 +9,12 @@ class MedicalResourceMap {
     this.currentView = 'region'; // 'region' or 'hospital'
     this.currentScenario = 'current';
     this.chart = null;
+    this.ageChart = null; // New Age Composition Chart
+    this.currentAgeChartYear = 2020; // Default Year for Age Chart
+
+    // New Analysis Unit State
+    this.currentAnalysisUnit = 'region'; // 'region' or 'municipality'
+    this.currentMunicipality = null;
 
     // Custom Simulation State (Drag & Drop)
     // Structure: { 'unassigned': [...names], 'group_1': [...names], 'group_2': [...names] ... }
@@ -34,9 +40,25 @@ class MedicalResourceMap {
 
   init() {
     this.initCustomState(); // Initialize the list
-    // ... rest of init
+
+    // Ensure global access
+    window.app = this;
+
     console.log('[MedicalResourceMap] init() starting...');
+
+    // 1. Initialize Regional Age Data (10-bin) FIRST
     try {
+      this.initAgeCompositionData();
+      console.log('[MedicalResourceMap] initAgeCompositionData() done. Keys:', Object.keys(MEDICAL_DATA.regions.hiroshima.ageComposition));
+      if (!MEDICAL_DATA.regions.hiroshima.ageComposition) alert("エイジデータ生成エラー: 広島医療圏データなし");
+    } catch (e) {
+      console.error('initAgeCompositionData failed:', e);
+      alert("初期化エラー(AgeData): " + e.message);
+    }
+
+    // 2. Generate Municipality Mock Data (depends on Region Data)
+    try {
+      this.generateMunicipalityMockData();
       this.renderMap();
       console.log('[MedicalResourceMap] renderMap() done');
     } catch (e) { console.error('renderMap failed:', e); }
@@ -59,6 +81,7 @@ class MedicalResourceMap {
     try {
       // グラフは初期表示（全体）
       this.renderChart();
+      this.renderAgeChart(); // Initial Age Chart Render
       console.log('[MedicalResourceMap] renderChart() done');
     } catch (e) { console.error('renderChart failed:', e); }
 
@@ -85,15 +108,333 @@ class MedicalResourceMap {
     });
   }
 
-  // ... (keeping updateChartForRegion, renderMap, renderMapLegend, renderStats, setupEventListeners as they were, just ensure we update the custom parts) ...
-  // Wait, I need to make sure I don't delete methods I'm not viewing.
-  // The replace_file_content tool replaces a BLOCK. I need to be careful not to delete init() if I am replacing constructor.
-  // Actually, I can just replace the Custom Simulation Logic part specifically.
-  // Let's scroll down to where "Custom: Municipality Click Handler" started in the previous `view_file`.
-  // It was around line 373.
-  // I will target the block from `toggleMunicipalitySelection` down to `renderMunicipalityPicker` or `updatePickerButtons`.
+  // Initialize 10-bin Age Composition Data for Regions
+  initAgeCompositionData() {
+    const baseTrends = {
+      2020: [8.0, 9.0, 9.5, 11.0, 14.0, 15.0, 12.0, 11.0, 7.0, 3.5],
+      2025: [7.5, 8.5, 9.0, 10.0, 12.5, 14.5, 13.0, 12.0, 8.5, 4.5],
+      2030: [7.0, 8.0, 8.5, 9.5, 11.0, 13.5, 14.0, 13.0, 10.0, 5.5],
+      2035: [6.5, 7.5, 8.0, 9.0, 10.0, 12.0, 14.0, 14.0, 11.5, 7.5],
+      2040: [6.0, 7.0, 7.5, 8.5, 9.5, 11.0, 13.0, 15.0, 13.0, 9.5]
+    };
 
-  // Let's stick to the plan: Replace the existing custom logic with the new one.
+    const labels = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90+"];
+
+    Object.values(MEDICAL_DATA.regions).forEach(region => {
+      const rData = {};
+      let type = 'standard';
+      if (['hiroshima', 'fukuyamaFuchu', 'hiroshimaChuo'].includes(region.id)) type = 'urban';
+      if (['bihoku', 'bisan', 'kure'].includes(region.id)) type = 'rural';
+
+      for (const [year, rates] of Object.entries(baseTrends)) {
+        const yearData = {};
+        let adjustedRates = [...rates];
+
+        if (type === 'urban') {
+          adjustedRates[2] += 1; // 20s
+          adjustedRates[3] += 1; // 30s
+          adjustedRates[7] -= 1; // 70s
+          adjustedRates[8] -= 1; // 80s
+        } else if (type === 'rural') {
+          adjustedRates[0] -= 1;
+          adjustedRates[2] -= 2;
+          adjustedRates[7] += 1.5;
+          adjustedRates[8] += 1.5;
+        }
+
+        // Normalize
+        const sum = adjustedRates.reduce((a, b) => a + b, 0);
+        adjustedRates = adjustedRates.map(v => (v / sum) * 100);
+
+        labels.forEach((label, idx) => {
+          yearData[label] = parseFloat(adjustedRates[idx].toFixed(1));
+        });
+
+        // Adjust last to match 100%
+        let currentSum = Object.values(yearData).reduce((a, b) => a + b, 0);
+        yearData["90+"] = parseFloat((yearData["90+"] + (100 - currentSum)).toFixed(1));
+
+        rData[year] = yearData;
+      }
+      region.ageComposition = rData;
+    });
+  }
+
+  // Generate Mock Data for Municipalities with Tier-based Logic
+  generateMunicipalityMockData() {
+    // Tier Definitions
+    const tiers = {
+      1: ["広島市中区", "広島市南区", "広島市安佐南区", "府中町", "東広島市"], // Urban/Growth
+      3: ["安芸太田町", "北広島町", "江田島市", "神石高原町", "大崎上島町", "世羅町", "庄原市"] // Rural/Depopulation
+      // Others are Tier 2 (Standard)
+    };
+
+    const getTier = (name) => {
+      if (tiers[1].includes(name)) return 1;
+      if (tiers[3].includes(name)) return 3;
+      return 2;
+    };
+
+    MUNICIPALITY_DATA.forEach(muni => {
+      const region = MEDICAL_DATA.regions[muni.regionId];
+      if (!region) return;
+
+      const tier = getTier(muni.name);
+
+      // 1. Population Projection (2020-2040)
+      // Base ratio from 2020
+      const basePop2020 = muni.population;
+      const regionPop2020 = region.population[2020];
+      const baseRatio = basePop2020 / regionPop2020;
+
+      muni.populationProjection = {};
+
+      const years = [2020, 2025, 2030, 2035, 2040];
+      years.forEach(year => {
+        // Calculate Region's decline rate relative to 2020
+        const regionDeclineRate = region.population[year] / region.population[2020];
+
+        // Adjust decline rate based on Tier
+        let adjustedRate = regionDeclineRate;
+        if (year > 2020) {
+          const progress = (year - 2020) / 20; // 0.0 to 1.0
+          if (tier === 1) {
+            // Tier 1: Resists decline (e.g., 10% better retention)
+            adjustedRate = regionDeclineRate * (1 + (0.10 * progress));
+          } else if (tier === 3) {
+            // Tier 3: Accelerates decline (e.g., 20% worse retention)
+            adjustedRate = regionDeclineRate * (1 - (0.20 * progress));
+          }
+        }
+
+        // Calculate projected population
+        muni.populationProjection[year] = Math.floor(basePop2020 * adjustedRate);
+      });
+      muni.tier = tier; // Store for export
+
+      // 2. Age Composition
+      if (region.ageComposition) {
+        // Deep Copy Region's Age Data as baseline
+        muni.ageComposition = JSON.parse(JSON.stringify(region.ageComposition));
+
+        // Adjust based on Tier
+        Object.keys(muni.ageComposition).forEach(year => {
+          const yearData = muni.ageComposition[year];
+          // Factors for adjustment
+          let youngFactor = 0; // Add to 0-19
+          let oldFactor = 0;   // Add to 70+
+
+          if (tier === 1) {
+            youngFactor = 2.0;
+            oldFactor = -2.0;
+          } else if (tier === 3) {
+            youngFactor = -2.0;
+            oldFactor = 4.0;
+          }
+
+          // Apply factors if non-zero
+          if (youngFactor !== 0 || oldFactor !== 0) {
+            const keys = Object.keys(yearData); // 0-9, 10-19 ...
+
+            // Adjust Young
+            yearData["0-9"] += (youngFactor / 2);
+            yearData["10-19"] += (youngFactor / 2);
+
+            // Adjust Old
+            yearData["70-79"] += (oldFactor / 3);
+            yearData["80-89"] += (oldFactor / 3);
+            yearData["90+"] += (oldFactor / 3);
+
+            // Clamp and Normalize
+            let sum = 0;
+            keys.forEach(k => {
+              if (yearData[k] < 0) yearData[k] = 0;
+              sum += yearData[k];
+            });
+
+            keys.forEach(k => {
+              yearData[k] = parseFloat(((yearData[k] / sum) * 100).toFixed(1));
+            });
+          }
+        });
+      }
+    });
+
+    console.log('[MedicalResourceMap] Municipality Mock Data Generated with Tiers');
+  }
+
+  // --- Analysis Unit Switching Logic ---
+
+  switchAnalysisUnit(unit) {
+    this.currentAnalysisUnit = unit;
+
+    // Toggle UI Visibility
+    const selector = document.getElementById('municipality-selector-container');
+    if (selector) {
+      selector.style.display = (unit === 'municipality') ? 'block' : 'none';
+    }
+
+    if (unit === 'municipality') {
+      // Ensure selector is populated
+      this.renderMunicipalitySelector();
+
+      // If no municipality selected, maybe select first? Or wait for user?
+      // Let's reset charts if no muni selected
+      if (!this.currentMunicipality) {
+        // Maybe select the first one of the current region or global?
+        // let's just clear for now, or select "Hiroshima City Naka Ward" as default?
+        // Better: Select "Hiroshima City Naka Ward" if nothing selected
+        const firstMuni = MUNICIPALITY_DATA[0].name;
+        this.selectMunicipality(firstMuni);
+        document.getElementById('municipality-select').value = firstMuni;
+      } else {
+        this.renderChart();
+        this.renderAgeChart();
+      }
+    } else {
+      // Back to region mode: Render current region or global
+      this.renderChart();
+      this.renderAgeChart();
+    }
+  }
+
+  renderMunicipalitySelector() {
+    const select = document.getElementById('municipality-select');
+    if (!select || select.options.length > 1) return; // Already populated
+
+    // Group by Region for nicety
+    const regionNames = {};
+    Object.values(MEDICAL_DATA.regions).forEach(r => regionNames[r.id] = r.name);
+
+    let html = '<option value="">市区町村を選択...</option>';
+
+    Object.keys(MEDICAL_DATA.regions).forEach(rId => {
+      const munis = MUNICIPALITY_DATA.filter(m => m.regionId === rId);
+      if (munis.length > 0) {
+        html += `<optgroup label="${regionNames[rId]}医療圏">`;
+        munis.forEach(m => {
+          html += `<option value="${m.name}">${m.name}</option>`;
+        });
+        html += `</optgroup>`;
+      }
+    });
+
+    select.innerHTML = html;
+  }
+
+  selectMunicipality(name) {
+    if (!name) return;
+    this.currentMunicipality = name;
+
+    // Highlight on Map (Yellow)
+    if (window.hiroshimaMap && window.hiroshimaMap.highlightMunicipality) {
+      window.hiroshimaMap.highlightMunicipality(name);
+    }
+
+    this.renderChart();
+    this.renderAgeChart();
+  }
+
+  // ... (renderChart skipped for brevity if not modifying) ...
+
+  renderAgeChart() {
+    const ctx = document.getElementById('age-composition-chart');
+    if (!ctx) return;
+
+    // Destroy old if exists
+    if (this.ageChartInstance) {
+      this.ageChartInstance.destroy();
+      this.ageChartInstance = null;
+    }
+
+    const year = this.currentAgeChartYear;
+    let ageData = {};
+    let label = "";
+
+    // Determine Data Source
+    if (this.currentAnalysisUnit === 'municipality' && this.currentMunicipality) {
+      const muni = MUNICIPALITY_DATA.find(m => m.name === this.currentMunicipality);
+      if (muni && muni.ageComposition && muni.ageComposition[year]) {
+        ageData = muni.ageComposition[year];
+        label = `${this.currentMunicipality} (${year}年)`;
+      } else {
+        // Fallback or empty
+        console.warn('No age data for muni:', this.currentMunicipality);
+      }
+    } else {
+      // Region Data
+      const regionId = this.currentRegion || 'hiroshima'; // Default
+      const region = MEDICAL_DATA.regions[regionId];
+      if (region && region.ageComposition && region.ageComposition[year]) {
+        ageData = region.ageComposition[year];
+        label = `${region.name}医療圏 (${year}年)`;
+      }
+    }
+
+    // Label Suffix Logic (User Request)
+    if (year === 2020) {
+      label += " ※実績値 (国勢調査)";
+    } else {
+      label += " ※推計値";
+    }
+
+    const labels = Object.keys(ageData); // 0-9 to 90+
+    const values = Object.values(ageData);
+
+    // Color Palette (Gradient-ish)
+    const backgroundColors = [
+      '#e0f2fe', '#bae6fd', '#7dd3fc', '#38bdf8', // 0-39 (Blue)
+      '#34d399', '#10b981', // 40-59 (Green)
+      '#fbbf24', '#f59e0b', // 60-79 (Amber)
+      '#f87171', '#b91c1c'  // 80+ (Red)
+    ];
+
+    try {
+      this.ageChartInstance = new Chart(ctx, {
+        type: 'bar', // Horizontal bar? 
+        // Standard bar is vertical. "indexAxis: 'y'" for horizontal
+        data: {
+          labels: labels.map(l => l + '歳'),
+          datasets: [{
+            label: '人口構成比 (%)',
+            data: values,
+            backgroundColor: backgroundColors.slice(0, labels.length),
+            barPercentage: 0.8
+          }]
+        },
+        options: {
+          indexAxis: 'y', // Horizontal Layout
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: label,
+              font: { size: 16 }
+            },
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.raw + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 25, // Fixed max/min for comparison? Or auto?
+              // Let's keep it somewhat fixed to show growth clearly
+              suggestedMax: 20
+            }
+          }
+        }
+      });
+    } catch (err) {
+      console.error("Chart Render Err:", err);
+    }
+  }
   // I will target the specific methods.
 
   // ----------------------------------------------------------------
@@ -244,81 +585,282 @@ class MedicalResourceMap {
 
   // Duplicate init removed
 
-  // 選択医療圏のグラフ更新
-  updateChartForRegion(regionId) {
-    const ctx = document.getElementById('population-chart');
-    if (!ctx) return;
+  // 選択医療圏・市区町村のグラフ更新
+  renderChart() {
+    try {
+      const ctx = document.getElementById('population-chart');
+      if (!ctx) return;
 
-    if (this.chart) {
-      this.chart.destroy();
-    }
+      if (this.chart) {
+        this.chart.destroy();
+      }
 
-    const region = MEDICAL_DATA.regions[regionId];
-    if (!region) return;
+      // Constants
+      const years = [2020, 2025, 2030, 2035, 2040];
+      const labels = years.map(y => {
+        if (y === 2020) return y + '年 (実績)';
+        return y + '年';
+      });
+      let datasets = [];
 
-    const years = [2020, 2025, 2030, 2035, 2040];
-    const populations = years.map(y => region.population[y] / 10000);
+      const formatPop = (val) => {
+        // Keep 1 decimal place
+        return parseFloat((val / 10000).toFixed(1));
+      };
 
-    this.chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: years.map(y => y + '年'),
-        datasets: [{
-          label: `${region.name}医療圏 人口推移（万人）`,
-          data: populations,
-          borderColor: region.color,
-          backgroundColor: region.color + '33', // 20% opacity
-          fill: true,
-          tension: 0.4,
-          pointRadius: 5,
-          pointHoverRadius: 7,
-          pointBackgroundColor: 'white',
-          pointBorderColor: region.color,
-          pointBorderWidth: 2,
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            labels: {
-              color: '#475569',
-              font: { family: "'Noto Sans JP', sans-serif", size: 12 },
-              usePointStyle: true,
-              boxWidth: 8
+      // Determine Data Source
+      if (this.currentAnalysisUnit === 'municipality') {
+        if (this.currentMunicipality) {
+          const muni = MUNICIPALITY_DATA.find(m => m.name === this.currentMunicipality);
+          if (muni && muni.populationProjection) {
+            datasets = [{
+              label: `${muni.name} 人口推移（万人）`,
+              data: years.map(y => formatPop(muni.populationProjection[y])),
+              borderColor: '#6366F1', // Indigo
+              backgroundColor: '#6366F133',
+              fill: true,
+              tension: 0.4,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              pointBackgroundColor: 'white',
+              pointBorderColor: '#6366F1',
+              pointBorderWidth: 2,
+              borderWidth: 3
+            }];
+          }
+        }
+      } else {
+        // Region Mode
+        const regionId = this.currentRegion;
+        if (regionId && MEDICAL_DATA.regions[regionId]) {
+          const region = MEDICAL_DATA.regions[regionId];
+          datasets = [{
+            label: `${region.name}医療圏 人口推移（万人）`,
+            data: years.map(y => formatPop(region.population[y])),
+            borderColor: region.color,
+            backgroundColor: region.color + '33',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: 'white',
+            pointBorderColor: region.color,
+            pointBorderWidth: 2,
+            borderWidth: 3
+          }];
+        }
+      }
+
+      // If no datasets (e.g. no selection), maybe empty chart or avoid creating
+      if (datasets.length === 0) return;
+
+      this.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: '#475569',
+                font: { family: "'Noto Sans JP', sans-serif", size: 12 },
+                usePointStyle: true,
+                boxWidth: 8
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              titleColor: '#0f172a',
+              bodyColor: '#334155',
+              borderColor: '#e2e8f0',
+              borderWidth: 1,
+              titleFont: { family: "'Noto Sans JP', sans-serif", weight: 'bold' },
+              bodyFont: { family: "'Noto Sans JP', sans-serif" },
+              padding: 10,
+              displayColors: false,
+              callbacks: {
+                label: (context) => {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += context.parsed.y + '万人';
+                  }
+                  return label;
+                }
+              }
             }
           },
-          tooltip: {
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            titleColor: '#0f172a',
-            bodyColor: '#334155',
-            borderColor: '#e2e8f0',
-            borderWidth: 1,
-            titleFont: { family: "'Noto Sans JP', sans-serif", weight: 'bold' },
-            bodyFont: { family: "'Noto Sans JP', sans-serif" },
-            padding: 10,
-            displayColors: false
-          }
-        },
-        scales: {
-          x: {
-            grid: { color: 'rgba(0,0,0,0.05)' },
-            ticks: { color: '#64748B' }
-          },
-          y: {
-            grid: { color: 'rgba(0,0,0,0.05)' },
-            ticks: {
-              color: '#64748B',
-              callback: (value) => value + '万'
+          scales: {
+            x: {
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { color: '#64748B' }
+            },
+            y: {
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: {
+                color: '#64748B',
+                callback: (value) => value.toFixed(1) + '万'
+              }
             }
           }
         }
-      }
-    });
+      });
+    } catch (e) { console.error('renderChart failed:', e); }
   }
+
+  // --- Age Composition Chart Methods ---
+
+  switchAgeChartYear(year) {
+    this.currentAgeChartYear = parseInt(year);
+
+    // Update Tabs UI
+    document.querySelectorAll('.year-tab').forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.dataset.year) === this.currentAgeChartYear);
+    });
+
+    this.renderAgeChart();
+  }
+
+  renderAgeChart() {
+    try {
+      const ctx = document.getElementById('age-composition-chart');
+      if (!ctx) return;
+
+      if (this.ageChart) {
+        this.ageChart.destroy();
+      }
+
+      // Keys for 10-year bins
+      const labels = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90+"];
+      let ageData = {};
+      labels.forEach(l => ageData[l] = 0);
+
+      let label = '';
+
+      // Determine Data Source
+      if (this.currentAnalysisUnit === 'municipality') {
+        if (this.currentMunicipality) {
+          const muni = MUNICIPALITY_DATA.find(m => m.name === this.currentMunicipality);
+          if (muni) {
+            label = `${muni.name} (${this.currentAgeChartYear}年) ※推計値`;
+            if (muni.ageComposition && muni.ageComposition[this.currentAgeChartYear]) {
+              ageData = muni.ageComposition[this.currentAgeChartYear];
+            } else {
+              labels.forEach(l => ageData[l] = 10);
+            }
+          } else {
+            label = `データが見つかりません`;
+          }
+        } else {
+          label = `市区町村を選択してください`;
+        }
+      } else {
+        // Region Mode Or Default
+        const targetRegion = (this.currentAnalysisUnit === 'region' && this.currentRegion)
+          ? MEDICAL_DATA.regions[this.currentRegion] : null;
+
+        if (targetRegion) {
+          label = `${targetRegion.name}医療圏 (${this.currentAgeChartYear}年) ※推計値`;
+          if (targetRegion.ageComposition && targetRegion.ageComposition[this.currentAgeChartYear]) {
+            ageData = targetRegion.ageComposition[this.currentAgeChartYear];
+          } else {
+            labels.forEach(l => ageData[l] = 10);
+          }
+        } else {
+          // Aggregate
+          label = `広島県全体 (${this.currentAgeChartYear}年) ※推計値`;
+          let counts = {};
+          labels.forEach(l => counts[l] = 0);
+          let count = 0;
+
+          Object.values(MEDICAL_DATA.regions).forEach(r => {
+            if (r.ageComposition && r.ageComposition[this.currentAgeChartYear]) {
+              const d = r.ageComposition[this.currentAgeChartYear];
+              labels.forEach(l => {
+                counts[l] += (d[l] || 0);
+              });
+              count++;
+            }
+          });
+
+          if (count > 0) {
+            labels.forEach(l => {
+              ageData[l] = parseFloat((counts[l] / count).toFixed(1));
+            });
+          }
+        }
+      }
+
+      const values = labels.map(l => ageData[l]);
+
+      // Gradient-like colors for age groups (Blue -> Green -> Orange -> Red -> Purple)
+      const colors = [
+        '#E0F2FE', '#BAE6FD', '#7DD3FC', '#38BDF8', // 0-39 (Blues)
+        '#34D399', '#10B981', // 40-59 (Greens)
+        '#FBBF24', '#F59E0B', // 60-79 (Ambers)
+        '#EF4444', '#B91C1C'  // 80+ (Reds)
+      ];
+
+      this.ageChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.map(l => l + '歳'),
+          datasets: [{
+            label: '割合(%)',
+            data: values,
+            backgroundColor: colors,
+            borderColor: '#e2e8f0',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: 'y', // Horizontal bars
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: label,
+              font: { family: "'Noto Sans JP', sans-serif", size: 14 },
+              padding: { bottom: 10 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => context.raw + '%'
+              }
+            }
+          },
+          scales: {
+            x: {
+              min: 0,
+              max: 25, // Adjusted max for 10-year bins (usually around 10-15%)
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              title: { display: true, text: '人口構成比 (%)' }
+            },
+            y: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    } catch (e) {
+      console.error('renderAgeChart failed:', e);
+    }
+  }
+
+
+
+
+
+
 
   // SVGマップを描画
   renderMap() {
@@ -495,7 +1037,9 @@ class MedicalResourceMap {
     }
 
     // Chart更新
-    this.updateChartForRegion(regionId);
+    // Chart更新
+    this.renderChart();
+    this.renderAgeChart(); // Update Age Chart
 
     if (updateUrl) this.updateUrl();
   }
@@ -758,7 +1302,7 @@ class MedicalResourceMap {
     `;
   }
 
-  // グラフを描画（Chart.js使用）- 全医療圏の人口推移
+  // グラフを描画（Chart.js使用）- 人口推移
   renderChart() {
     const ctx = document.getElementById('population-chart');
     if (!ctx) return;
@@ -769,22 +1313,61 @@ class MedicalResourceMap {
     }
 
     const years = [2020, 2025, 2030, 2035, 2040];
+    let datasets = [];
+    let title = '';
 
-    // 全医療圏のデータセットを作成 (Enhanced for larger display)
-    const datasets = Object.entries(MEDICAL_DATA.regions).map(([id, region]) => ({
-      label: region.name + '医療圏',
-      data: years.map(y => region.population[y] / 10000),
-      borderColor: region.color,
-      backgroundColor: region.color + '20', // Light fill
-      fill: true,
-      tension: 0.4,
-      pointRadius: 8,
-      pointHoverRadius: 12,
-      borderWidth: 5,
-      pointBackgroundColor: 'white',
-      pointBorderColor: region.color,
-      pointBorderWidth: 4
-    }));
+    if (this.currentAnalysisUnit === 'municipality' && this.currentMunicipality) {
+      // --- Municipality Mode ---
+      const muni = MUNICIPALITY_DATA.find(m => m.name === this.currentMunicipality);
+      if (muni && muni.populationProjection) {
+        title = `${muni.name} 人口推移予測`;
+        datasets = [{
+          label: muni.name,
+          data: years.map(y => muni.populationProjection[y]),
+          borderColor: '#6366F1', // Indigo
+          backgroundColor: '#6366F120',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          borderWidth: 4,
+          pointBackgroundColor: 'white',
+          pointBorderColor: '#6366F1',
+          pointBorderWidth: 3
+        }];
+      }
+    } else {
+      // --- Region Mode (Default) ---
+      title = '広島県 7医療圏 人口推移予測';
+      datasets = Object.entries(MEDICAL_DATA.regions).map(([id, region]) => ({
+        label: region.name + '医療圏',
+        data: years.map(y => region.population[y] / 10000), // Original was in Man-nin (10k units)?
+        // wait, original logic: data: years.map(y => region.population[y] / 10000)
+        // But my muni projection is raw numbers. 
+        // I should probably display muni in 10k too if large, or raw if small.
+        // For consistency, let's stick to Man-nin for regions.
+        // For Munis, they are smaller. Let's use Man-nin as well but formatted?
+        // Or dynamic Y axis? Chart.js handles dynamic Y.
+        // But the callback `value + '万人'` assumes Man-nin.
+        // Let's divide muni by 10000 as well.
+        borderColor: region.color,
+        backgroundColor: region.color + '20', // Light fill
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        borderWidth: 4,
+        pointBackgroundColor: 'white',
+        pointBorderColor: region.color,
+        pointBorderWidth: 3
+      }));
+    }
+
+    // Adjust dataset values for munis if handled separately above
+    if (this.currentAnalysisUnit === 'municipality' && datasets.length > 0) {
+      datasets[0].data = datasets[0].data.map(v => v / 10000);
+    }
+
 
     this.chart = new Chart(ctx, {
       type: 'line',
@@ -802,7 +1385,7 @@ class MedicalResourceMap {
         plugins: {
           title: {
             display: true,
-            text: '広島県 7医療圏 人口推移予測',
+            text: title,
             font: { family: "'Noto Sans JP', sans-serif", size: 20, weight: 'bold' },
             color: '#1e293b',
             padding: { top: 10, bottom: 20 }
@@ -829,7 +1412,7 @@ class MedicalResourceMap {
             padding: 16,
             boxPadding: 6,
             callbacks: {
-              label: (context) => `${context.dataset.label}: ${context.parsed.y.toFixed(1)}万人`
+              label: (context) => `${context.dataset.label}: ${context.parsed.y.toFixed(2)}万人`
             }
           }
         },
@@ -846,7 +1429,7 @@ class MedicalResourceMap {
             ticks: {
               color: '#475569',
               font: { size: 14, weight: 'bold' },
-              callback: (value) => value + '万人'
+              callback: (value) => value + '万'
             },
             title: {
               display: true,
@@ -979,6 +1562,85 @@ class MedicalResourceMap {
       this.currentRegion = null;
       // map.js handles side panel reset via resetView
     }
+  }
+  // --- Data Export Logic ---
+
+  exportData(type) {
+    let csvContent = "";
+    let filename = "";
+    const now = new Date().toISOString().slice(0, 10);
+
+    if (type === 'municipalities') {
+      filename = `hiroshima_municipalities_${now}.csv`;
+      // Header
+      csvContent += "市区町村名,医療圏ID,Tier分類,2020年人口,2025年推計,2030年推計,2035年推計,2040年推計,0-9歳(2040),10-19歳(2040),20-29歳(2040),30-39歳(2040),40-49歳(2040),50-59歳(2040),60-69歳(2040),70-79歳(2040),80-89歳(2040),90歳以上(2040)\n";
+
+      MUNICIPALITY_DATA.forEach(m => {
+        const p = m.populationProjection || {};
+        const ac = (m.ageComposition && m.ageComposition[2040]) ? m.ageComposition[2040] : {};
+
+        let row = [
+          m.name,
+          m.regionId,
+          m.tier || '-',
+          m.population, // 2020 base
+          p[2025] || '',
+          p[2030] || '',
+          p[2035] || '',
+          p[2040] || '',
+          ac["0-9"] || '',
+          ac["10-19"] || '',
+          ac["20-29"] || '',
+          ac["30-39"] || '',
+          ac["40-49"] || '',
+          ac["50-59"] || '',
+          ac["60-69"] || '',
+          ac["70-79"] || '',
+          ac["80-89"] || '',
+          ac["90+"] || ''
+        ].join(",");
+        csvContent += row + "\n";
+      });
+
+    } else if (type === 'hospitals') {
+      filename = `hiroshima_hospitals_${now}.csv`;
+      // Header
+      csvContent += "医療圏名,病院名,機能種別,病床数,救急告示,診療科,住所,緯度,経度\n";
+
+      Object.values(MEDICAL_DATA.regions).forEach(region => {
+        region.hospitals.forEach(h => {
+          let row = [
+            region.name,
+            h.name,
+            h.type,
+            h.beds,
+            h.emergencyLevel,
+            (h.departments || []).join("/"),
+            h.address,
+            h.lat,
+            h.lng
+          ].join(",");
+          csvContent += row + "\n";
+        });
+      });
+    }
+
+    this.downloadCSV(csvContent, filename);
+  }
+
+  downloadCSV(csvContent, filename) {
+    // Add BOM for Excel
+    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    const blob = new Blob([bom, csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
 
